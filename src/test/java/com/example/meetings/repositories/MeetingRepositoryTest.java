@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MeetingRepositoryTest {
 
     private static ObjectMapper mapper;
+    private final String dataFetchingPath = "TestMeetingsFetching.json";
+    private final String dataSavingPath = "TestMeetingSaving.json";
 
     @BeforeAll
     public static void initMapper() {
@@ -33,30 +35,35 @@ class MeetingRepositoryTest {
 
 
     @Test
-    void fetchingAllMeetingsFromTestMeetingsFileShouldFetchAllMeetings() throws IOException {
-        MeetingsList meetingsListObject = fetchingAllMeetings("TestMeetingsFetching.json");
-        Integer expected = 2;
+    void fetchingAllMeetingsFromTestMeetingsFetchingFileShouldFetchAllMeetings() throws IOException {
+        MeetingsList meetingsListObject = fetchingAllMeetings(dataFetchingPath);
+        Integer expected = 5;
         Integer actual = meetingsListObject.getMeetings().size();
         assertEquals(expected, actual);
-
     }
 
     @Test
     void saveNewMeeting() throws IOException {
         List<Attendant> attendantList = new ArrayList<>();
-        attendantList.add(new Attendant(new Person("39112301598", "Petras Petraitis")));
+        Person person = new Person("39112301598", "Petras Petraitis");
+        attendantList.add(new Attendant(person));
 
-        Meeting meeting = new Meeting("java meeting", new Person("39112301598", "Petras Petraitis"), "test", HUB, LIVE, LocalDate.of(2022, 05, 28), LocalDate.of(2022, 05, 30), attendantList);
-        List<Meeting> meetingsList = fetchingAllMeetings("TestMeetingSaving.json").getMeetings();
+        Meeting meeting = new Meeting(
+                "java meeting",
+                person,
+                "test",
+                HUB,
+                LIVE,
+                LocalDate.of(2022, 05, 28),
+                LocalDate.of(2022, 05, 30),
+                attendantList);
+        List<Meeting> meetingsList = fetchingAllMeetings(dataSavingPath).getMeetings();
 
         Integer actual1 = meetingsList.size();
         meetingsList.add(meeting);
-        mapper.writeValue(Paths.get("TestMeetingSaving.json").toFile(), new MeetingsList(meetingsList) );
-        Integer actual2 = fetchingAllMeetings("TestMeetingSaving.json").getMeetings().size();
+        mapper.writeValue(Paths.get(dataSavingPath).toFile(), new MeetingsList(meetingsList) );
+        Integer actual2 = fetchingAllMeetings(dataSavingPath).getMeetings().size();
 
         assertEquals(1, actual2-actual1);
-
-
-
     }
 }

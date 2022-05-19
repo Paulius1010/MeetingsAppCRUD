@@ -18,52 +18,50 @@ import java.util.stream.Collectors;
 public class MeetingService {
 
     private final MeetingRepository meetingRepository;
-    private List<Meeting> meetingsList;
 
     @Autowired
-    public MeetingService(MeetingRepository meetingRepository, List<Meeting> meetingsList) {
+    public MeetingService(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
-        this.meetingsList = meetingsList;
     }
 
     public List<MeetingResponse> fetchAllActiveFilteredMeetings(DataFilterRequest dataFilterRequest) {
-        this.meetingsList = meetingRepository.getAllActiveMeetings();
+        List<Meeting> meetingsList = meetingRepository.getAllActiveMeetings();
 
         String description = dataFilterRequest.getDescription();
                 if (description != null && !description.isEmpty()) {
-            this.meetingsList = filterByDescription(meetingsList, description);
+            meetingsList = filterByDescription(meetingsList, description);
         }
 
         String responsiblePersonId = dataFilterRequest.getResponsiblePersonId();
         if (responsiblePersonId != null && !responsiblePersonId.isEmpty()) {
-            this.meetingsList = filterByResponsiblePersonId(meetingsList, responsiblePersonId);
+            meetingsList = filterByResponsiblePersonId(meetingsList, responsiblePersonId);
         }
 
         String categoryString = dataFilterRequest.getCategory();
         if (categoryString != null && !categoryString.isEmpty()) {
             Category category = Category.getCategoryFromString(dataFilterRequest.getCategory());
-            this.meetingsList = filterByCategory(meetingsList, category);
+            meetingsList = filterByCategory(meetingsList, category);
         }
 
         String typeString = dataFilterRequest.getType();
         if (typeString != null && !typeString.isEmpty()) {
             Type type = Type.getTypeFromString(dataFilterRequest.getType());
-            this.meetingsList = filterByType(meetingsList, type);
+            meetingsList = filterByType(meetingsList, type);
         }
 
         Integer attendeesMoreThan = dataFilterRequest.getAttendeesMoreThan();
         if (attendeesMoreThan != null) {
-            this.meetingsList = filterByAttendeesNumber(meetingsList, attendeesMoreThan);
+            meetingsList = filterByAttendeesNumber(meetingsList, attendeesMoreThan);
         }
 
         LocalDate periodRangeLowerBound = dataFilterRequest.getPeriodRangeLowerBound();
         if (periodRangeLowerBound != null) {
-            this.meetingsList = filterByPeriodRangeLowerBound(meetingsList, periodRangeLowerBound);
+            meetingsList = filterByPeriodRangeLowerBound(meetingsList, periodRangeLowerBound);
         }
 
         LocalDate periodRangeUpperBound = dataFilterRequest.getPeriodRangeUpperBound();
         if (periodRangeUpperBound != null) {
-            this.meetingsList = filterByPeriodRangeUpperBound(meetingsList, periodRangeUpperBound);
+            meetingsList = filterByPeriodRangeUpperBound(meetingsList, periodRangeUpperBound);
         }
 
         List<MeetingResponse> meetingsResponsesList = new ArrayList<>();
@@ -87,31 +85,31 @@ public class MeetingService {
         return meetingsResponsesList;
     }
 
-    private List<Meeting> filterByPeriodRangeLowerBound(List<Meeting> meetingsList, LocalDate periodRangeLowerBound) {
+    List<Meeting> filterByPeriodRangeLowerBound(List<Meeting> meetingsList, LocalDate periodRangeLowerBound) {
         return meetingsList.stream().filter(meeting -> !meeting.getEndDate().isBefore(periodRangeLowerBound)).collect(Collectors.toList());
     }
 
-    private List<Meeting> filterByPeriodRangeUpperBound(List<Meeting> meetingsList, LocalDate periodRangeUpperBound) {
+    List<Meeting> filterByPeriodRangeUpperBound(List<Meeting> meetingsList, LocalDate periodRangeUpperBound) {
         return meetingsList.stream().filter(meeting -> !meeting.getStartDate().isAfter(periodRangeUpperBound)).collect(Collectors.toList());
     }
 
-    private List<Meeting> filterByAttendeesNumber(List<Meeting> meetingsList, Integer attendeesMoreThan) {
+    List<Meeting> filterByAttendeesNumber(List<Meeting> meetingsList, Integer attendeesMoreThan) {
         return meetingsList.stream().filter(meeting -> meeting.getAttendants().size() > attendeesMoreThan).collect(Collectors.toList());
     }
 
-    private List<Meeting> filterByType(List<Meeting> meetingsList, Type type) {
+    List<Meeting> filterByType(List<Meeting> meetingsList, Type type) {
         return meetingsList.stream().filter(meeting -> meeting.getType() == type).collect(Collectors.toList());
     }
 
-    private List<Meeting> filterByCategory(List<Meeting> meetingsList, Category category) {
+    List<Meeting> filterByCategory(List<Meeting> meetingsList, Category category) {
         return meetingsList.stream().filter(meeting -> meeting.getCategory() == category).collect(Collectors.toList());
     }
 
-    private List<Meeting> filterByResponsiblePersonId(List<Meeting> meetingsList, String responsiblePersonId) {
+    List<Meeting> filterByResponsiblePersonId(List<Meeting> meetingsList, String responsiblePersonId) {
         return meetingsList.stream().filter(meeting -> meeting.getResponsiblePerson().getPersonId().equals(responsiblePersonId)).collect(Collectors.toList());
     }
 
-    private List<Meeting> filterByDescription(List<Meeting> meetingsList, String description) {
+    List<Meeting> filterByDescription(List<Meeting> meetingsList, String description) {
         return meetingsList.stream().filter(meeting -> meeting.getDescription().contains(description)).collect(Collectors.toList());
 
     }

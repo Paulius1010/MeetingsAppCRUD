@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Repository
 public class MeetingRepository {
 
-    private final String filePath = "meetings.json";
+    private final String dataPath = "meetings.json";
 
     public List<Meeting> getAllActiveMeetings() {
         return getAllMeetingsFromFile().stream().filter(meeting -> !meeting.getEndDate().isBefore(LocalDate.now())).collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class MeetingRepository {
     public void saveNewMeetingsList(List<Meeting> meetingsList) {
         try {
              ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(Paths.get(filePath).toFile(), new MeetingsList(meetingsList));
+            mapper.writeValue(Paths.get(dataPath).toFile(), new MeetingsList(meetingsList));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class MeetingRepository {
         MeetingsList meetingsListObject = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
-            meetingsListObject = mapper.readValue(Paths.get(filePath).toFile(), MeetingsList.class);
+            meetingsListObject = mapper.readValue(Paths.get(dataPath).toFile(), MeetingsList.class);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
