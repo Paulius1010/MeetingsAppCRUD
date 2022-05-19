@@ -27,13 +27,11 @@ public class MeetingAttendantsService {
     public String saveNewAttendant(String id, AttendantInputRequest attendantInputRequest) {
         List<Meeting> meetingsList = meetingRepository.getAllActiveMeetings();
         Optional<Meeting> updatingMeeting = meetingsList.stream().filter(meeting -> meeting.getId().equals(id)).findFirst();
-        Attendant newAtendant = new Attendant(new Person(attendantInputRequest.getAttendantId(), attendantInputRequest.getAttendantFullName()));
         if (updatingMeeting.isEmpty()) {
             return "Meeting " + id + "(" + ")" + " not found";
         } else {
-                List<Attendant> attendantList = updatingMeeting.get().getAttendants();
-            List<Attendant> meetingAttendants = updatingMeeting.get().getAttendants();
-            Optional<Attendant> searchingAttendant = meetingAttendants
+            List<Attendant> attendantList = updatingMeeting.get().getAttendants();
+            Optional<Attendant> searchingAttendant = attendantList
                     .stream()
                     .filter(attendant -> attendant.getPerson()
                             .getPersonId()
@@ -42,10 +40,11 @@ public class MeetingAttendantsService {
             if (searchingAttendant.isPresent()) {
                 return attendantInputRequest.getAttendantFullName() + " is already in the meeting " + "\"" + updatingMeeting.get().getName() + "\"" +" (" + id +")";
             }
-                attendantList.add(newAtendant);
+            Attendant newAttendant = new Attendant(new Person(attendantInputRequest.getAttendantId(), attendantInputRequest.getAttendantFullName()));
+            attendantList.add(newAttendant);
                 meetingRepository.saveNewMeetingsList(meetingsList);
-            }
-        return "New attendant " + newAtendant.getPerson().getPersonFullName() + " added to the meeting " + "\"" + updatingMeeting.get().getName() + "\"" +" ("  + id +")";
+            return "New attendant " + newAttendant.getPerson().getPersonFullName() + " added to the meeting " + "\"" + updatingMeeting.get().getName() + "\"" +" ("  + id +")";
+        }
     }
 
     public String removeAttendant(String id, AttendantRemoveRequest attendantRemoveRequest) {

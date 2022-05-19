@@ -1,0 +1,55 @@
+{
+  "meetings": [
+    {
+      "id":"3dab952a-be07-4f11-9fa6-d27dd90b60d3",
+      "name":"java meeting",
+      "responsiblePerson":
+      {
+        "personId":"39112301598",
+        "personFullName":"Petras Petraitis"
+      },
+      "description":"test","category":"HUB",
+      "type":"LIVE",
+      "startDate":"2022-05-18",
+      "endDate":"2022-05-20",
+      "attendants":[
+        {
+          "person":
+          {"personId":"39112301598",
+            "personFullName":"Petras Petraitis"
+          },
+          "registrationDate":"2022-05-17"
+        },
+        {
+          "person":{"personId":"1569156798",
+            "personFullName":"Marius Vilius"
+          },
+          "registrationDate":"2022-05-18"
+        }
+      ]
+    },
+    {
+      "id":"58a5599a-8d8b-4fe4-bc70-8c0cc245562d",
+      "name":"java meeting",
+      "responsiblePerson":
+      {
+        "personId":"1569156778",
+        "personFullName":"Gintars Girnis"
+      },
+      "description":"java workshop",
+      "category":"HUB",
+      "type":"LIVE",
+      "startDate":"2022-05-25",
+      "endDate":"2022-05-29",
+      "attendants":[
+        {
+          "person":
+          {"personId":"1569156778",
+            "personFullName":"Gintars Girnis"
+          },
+          "registrationDate":"2022-05-18"
+        }
+      ]
+    }
+  ]
+}

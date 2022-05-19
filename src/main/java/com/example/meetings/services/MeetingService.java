@@ -26,8 +26,7 @@ public class MeetingService {
         this.meetingsList = meetingsList;
     }
 
-    public List<MeetingResponse> fetchAllActiveMeetings(DataFilterRequest dataFilterRequest) {
-        List<MeetingResponse> meetingsResponsesList = new ArrayList<>();
+    public List<MeetingResponse> fetchAllActiveFilteredMeetings(DataFilterRequest dataFilterRequest) {
         this.meetingsList = meetingRepository.getAllActiveMeetings();
 
         String description = dataFilterRequest.getDescription();
@@ -66,6 +65,8 @@ public class MeetingService {
         if (periodRangeUpperBound != null) {
             this.meetingsList = filterByPeriodRangeUpperBound(meetingsList, periodRangeUpperBound);
         }
+
+        List<MeetingResponse> meetingsResponsesList = new ArrayList<>();
 
         for (Meeting meeting : meetingsList) {
 

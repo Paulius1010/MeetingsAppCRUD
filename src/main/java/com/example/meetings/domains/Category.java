@@ -1,10 +1,10 @@
 package com.example.meetings.domains;
 
 public enum Category {
-    CodeMonkey("codeMonkey"),
-    Hub("hub"),
-    Short("short"),
-    TeamBuilding("teamBuilding");
+    CODEMONKEY("CodeMonkey"),
+    HUB("Hub"),
+    SHORT("Short"),
+    TEAMBUILDING("TeamBuilding");
 
     private final String value;
 
