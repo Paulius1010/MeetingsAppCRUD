@@ -33,7 +33,15 @@ public class MeetingResponse {
         @JsonFormat
         List<Attendant> attendants;
 
-        public MeetingResponse(String id, String name, Person responsiblePerson, String description, String category, String type, LocalDate startDate, LocalDate endDate, List<Attendant> attendants) {
+        public MeetingResponse(String id,
+                               String name,
+                               Person responsiblePerson,
+                               String description,
+                               String category,
+                               String type,
+                               LocalDate startDate,
+                               LocalDate endDate,
+                               List<Attendant> attendants) {
                 this.id = id;
                 this.name = name;
                 this.responsiblePerson = responsiblePerson;

@@ -86,31 +86,39 @@ public class MeetingService {
     }
 
     List<Meeting> filterByPeriodRangeLowerBound(List<Meeting> meetingsList, LocalDate periodRangeLowerBound) {
-        return meetingsList.stream().filter(meeting -> !meeting.getEndDate().isBefore(periodRangeLowerBound)).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> !meeting.getEndDate().isBefore(periodRangeLowerBound)).collect(Collectors.toList());
     }
 
     List<Meeting> filterByPeriodRangeUpperBound(List<Meeting> meetingsList, LocalDate periodRangeUpperBound) {
-        return meetingsList.stream().filter(meeting -> !meeting.getStartDate().isAfter(periodRangeUpperBound)).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> !meeting.getStartDate().isAfter(periodRangeUpperBound)).collect(Collectors.toList());
     }
 
     List<Meeting> filterByAttendeesNumber(List<Meeting> meetingsList, Integer attendeesMoreThan) {
-        return meetingsList.stream().filter(meeting -> meeting.getAttendants().size() > attendeesMoreThan).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> meeting.getAttendants().size() > attendeesMoreThan).collect(Collectors.toList());
     }
 
     List<Meeting> filterByType(List<Meeting> meetingsList, Type type) {
-        return meetingsList.stream().filter(meeting -> meeting.getType() == type).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> meeting.getType() == type).collect(Collectors.toList());
     }
 
     List<Meeting> filterByCategory(List<Meeting> meetingsList, Category category) {
-        return meetingsList.stream().filter(meeting -> meeting.getCategory() == category).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> meeting.getCategory() == category).collect(Collectors.toList());
     }
 
     List<Meeting> filterByResponsiblePersonId(List<Meeting> meetingsList, String responsiblePersonId) {
-        return meetingsList.stream().filter(meeting -> meeting.getResponsiblePerson().getPersonId().equals(responsiblePersonId)).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> meeting.getResponsiblePerson().getPersonId().equals(responsiblePersonId))
+                .collect(Collectors.toList());
     }
 
     List<Meeting> filterByDescription(List<Meeting> meetingsList, String description) {
-        return meetingsList.stream().filter(meeting -> meeting.getDescription().contains(description)).collect(Collectors.toList());
+        return meetingsList.stream()
+                .filter(meeting -> meeting.getDescription().contains(description)).collect(Collectors.toList());
 
     }
 
@@ -154,7 +162,8 @@ public class MeetingService {
     public String deleteMeeting(MeetingDeleteRequest meetingDeleteRequest) {
         String id = meetingDeleteRequest.getMeetingId();
         List<Meeting> meetingsList = meetingRepository.getAllActiveMeetings();
-        Optional<Meeting> removingMeeting = meetingsList.stream().filter(meeting -> meeting.getId().equals(id)).findFirst();
+        Optional<Meeting> removingMeeting = meetingsList.stream()
+                .filter(meeting -> meeting.getId().equals(id)).findFirst();
         if (removingMeeting.isEmpty()) {
             return "Meeting with such an id does not exist";
         } else {

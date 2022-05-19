@@ -17,7 +17,8 @@ public class MeetingRepository {
     private final String dataPath = "meetings.json";
 
     public List<Meeting> getAllActiveMeetings() {
-        return getAllMeetingsFromFile().stream().filter(meeting -> !meeting.getEndDate().isBefore(LocalDate.now())).collect(Collectors.toList());
+        return getAllMeetingsFromFile().stream()
+                .filter(meeting -> !meeting.getEndDate().isBefore(LocalDate.now())).collect(Collectors.toList());
     }
 
     public void saveMeeting(Meeting meeting) {
