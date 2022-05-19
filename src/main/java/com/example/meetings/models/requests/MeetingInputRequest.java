@@ -52,7 +52,14 @@ public class MeetingInputRequest {
     @JsonSerialize(using = LocalDateSerializer.class)
     LocalDate endDate;
 
-    public MeetingInputRequest(String name, String responsiblePersonId, String responsiblePersonFullName, String description, String category, String type, LocalDate startDate, LocalDate endDate) {
+    public MeetingInputRequest(String name,
+                               String responsiblePersonId,
+                               String responsiblePersonFullName,
+                               String description,
+                               String category,
+                               String type,
+                               LocalDate startDate,
+                               LocalDate endDate) {
         this.name = name;
         this.responsiblePersonId = responsiblePersonId;
         this.responsiblePersonFullName = responsiblePersonFullName;

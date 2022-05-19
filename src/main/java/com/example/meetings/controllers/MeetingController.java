@@ -1,4 +1,5 @@
 package com.example.meetings.controllers;
+
 import com.example.meetings.models.requests.*;
 import com.example.meetings.models.responses.MeetingInputResponse;
 import com.example.meetings.models.responses.MeetingResponse;
@@ -29,7 +30,7 @@ public class MeetingController {
     @GetMapping(value = "/meetings")
     @ResponseStatus(HttpStatus.OK)
     List<MeetingResponse> fetchAllActiveMeetings(@Valid @RequestBody DataFilterRequest dataFilterRequest) {
-        return meetingService.fetchAllActiveMeetings(dataFilterRequest);
+        return meetingService.fetchAllActiveFilteredMeetings(dataFilterRequest);
     }
 
     @PostMapping

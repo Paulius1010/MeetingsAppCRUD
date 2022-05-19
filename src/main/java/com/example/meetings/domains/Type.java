@@ -1,8 +1,8 @@
 package com.example.meetings.domains;
 
 public enum Type {
-    Live("live"),
-    InPerson("inPerson");
+    LIVE("Live"),
+    INPERSON("InPerson");
 
 
     private final String value;
